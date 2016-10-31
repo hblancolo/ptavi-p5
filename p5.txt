@@ -13,19 +13,29 @@ Se ha capturado una sesión SIP (archivo sip.cap.gz), que se puede abrir con Wir
 
 2. Observa que las tramas capturadas corresponden a una sesión SIP con Ekiga, un cliente de VoIP para GNOME. Responde a las siguientes cuestiones:
  ** ¿Cuántos paquetes componen la captura?
+        954.
  ** ¿Cuánto tiempo dura la captura?
+        56.149345 segundos.
  ** ¿Qué IP tiene la máquina donde se ha efectuado la captura? ¿Se trata de una IP pública o de una IP privada? ¿Por qué lo sabes?
+        192.168.1.34. Es una IP privada. Es privada puesto que pertenece al 
+        grupo 192.168.0.0 a 192.168.255.255.
 
 
 3. Antes de analizar las tramas, mira las estadísticas generales que aparecen en el menú de Statistics. En el apartado de jerarquía de protocolos (Protocol Hierarchy) se puede ver el porcentaje del tráfico correspondiente al protocolo TCP y UDP.
  ** ¿Cuál de los dos es mayor? ¿Es esto consistente con una aplicación que transmite en tiempo real?
+        El tráfico de UDP es notablemente mayor (un 96.2% frente al 2.1% de 
+        TCP). Tiene sentido puesto que el protocolo UDP al no ser un 
+        protocolo orientado a conexión resulta más interesante para 
+        aplicaciones streaming, ya que en ellas es más importante la 
+        recepción rápida de los paquetes que la verificación de los mismos.
  ** ¿Qué otros protocolos podemos ver en la jerarquía de protocolos?
-
+        Ethernet, IPv4, UDP, SIP, RTP, RTCP, DNS, TCP, HTTP, ICMP, ARP.
 
 4. Observa por encima el flujo de tramas en el menú de Statistics en IO Graphs. La captura que estamos viendo incluye desde la inicialización (registro) de la aplicación hasta su finalización, con una llamada entremedias.
  ** Filtra por sip para conocer cuándo se envían paquetes SIP. ¿En qué segundos tienen lugar esos envíos?
+        7, 14, 16, 38, 39, 55.
  ** Y los paquetes con RTP, ¿cuándo se envían?
-
+        Se envían a partir del segundo 16 y hasta el segundo 39.   
 
 
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
