@@ -155,14 +155,19 @@ Se ha capturado una sesión SIP (archivo sip.cap.gz), que se puede abrir con Wir
 
 15. Identifica la trama donde se finaliza la conversación.
  ** ¿Qué método SIP se utiliza?
+        BYE.
  ** ¿En qué trama(s)?
+        924, 925, 927, 933.
  ** ¿Por qué crees que se envía varias veces?
-
+        Enviando 4 veces el BYE, aumentamos la probabilidad de que alguna de las tramas llegue y se cuelgue la llamada.
 
 16. Finalmente, se cierra la aplicación de VozIP.
  ** ¿Por qué aparece una instrucción SIP del tipo REGISTER?
+        Aparece con el objetivo de dar de baja al usuario registrado. El hecho de dar de baja al usuario lo consigue mandando en el campo Expires el valor 0.
  ** ¿En qué trama sucede esto?
+        953.
  ** ¿En qué se diferencia con la instrucción que se utilizó con anterioridad (al principio de la sesión)?
+        En esta última trama el campo Expires tiene valor 0, mientras que al principio de la sesión el campo Expires tenía valor 3600.
 
 
 
