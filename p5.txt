@@ -70,29 +70,38 @@ Se ha capturado una sesión SIP (archivo sip.cap.gz), que se puede abrir con Wir
 
 8. La trama 46 es la primera trama SIP. En un entorno como el de Internet, lo habitual es desconocer la dirección IP de la otra parte al realizar una llamada. Por eso, todo usuario registra su localización en un servidor Registrar. El Registrar guarda información sobre los usuarios en un servidor de localización que puede ser utilizado para localizar usuarios.
  ** ¿Qué dirección IP tiene el servidor Registrar?
-        86.64.162.35
+        86.64.162.35.
  ** ¿A qué puerto (del servidor Registrar) se envían los paquetes SIP?
-        5060
+        5060.
  ** ¿Qué método SIP utiliza el UA para registrarse?
-        REGISTER
+        REGISTER.
  ** Además de REGISTER, ¿qué instrucciones SIP entiende el UA?
-        INVITE, ACK, BYE, CANCEL, OPTIONS.
-
+        INVITE, ACK, OPTIONS, BYE, CANCELL, NOTIFY, REFER, MESSAGE.
 
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
 
 9. Fijémonos en las tramas siguientes a la número 46:
  ** ¿Se registra con éxito en el primer intento?
+        No.
  ** ¿Cómo sabemos si el registro se ha realizado correctamente o no?
+        Sabemos que el registro no se ha realizado correctamente porque el servidor registrar contesta al cliente con un mensaje 401 Unauthorized.   
  ** ¿Podrías identificar las diferencias entre el primer intento y el segundo de registro? (fíjate en el tamaño de los paquetes y mira a qué se debe el cambio)
+        El primer intento de registro no lleva autenticación, por ello recibe el mensaje del registrar "401 Unauthorized". Sin embargo el segundo intento si que posee cabecera de Authorization, y por ello el servidor registrar lo registra correctamente.
+(((((((((((PREGUNTAR SOBRE COMO FUNCIONA LA AUTORIZACIÓN))))))))))))))))))
  ** ¿Cuánto es el valor del tiempo de expiración de la sesión? Indica las unidades.
+        3600 segundos.
 
 
 10. Una vez registrados, podemos efectuar una llamada. Vamos a probar con el servicio de eco de Ekiga que nos permite comprobar si nos hemos conectado correctamente. El servicio de eco tiene la dirección sip:500@ekiga.net. Veamos el INVITE de cerca.
  ** ¿Puede verse el nombre del que efectúa la llamada, así como su dirección SIP?
+        Sí, quien efectúa la llamada es "Gregorio Robles" y su dirección sip es "grex@ekiga.net".
  ** ¿Qué es lo que contiene el cuerpo de la trama? ¿En qué formato/protocolo está?
+        Contiene la descripción de una sesión multimedia. El protocolo utilizado es SDP.
  ** ¿Tiene éxito el primer intento? ¿Cómo lo sabes?
+        No. El servidor contesta con un mensaje sobre el requerimiento de autenticación "407 Proxy Authentication Required".
  ** ¿En qué se diferencia el segundo INVITE más abajo del primero? ¿A qué crees que se debe esto?
+        El segundo INVITE incluye el campo de cabecera Proxy-Authorization.
+(((((a que se debe????)))))))
 
 
 11. Una vez conectado, estudia el intercambio de tramas.
