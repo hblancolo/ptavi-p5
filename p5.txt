@@ -87,7 +87,6 @@ Se ha capturado una sesión SIP (archivo sip.cap.gz), que se puede abrir con Wir
         Sabemos que el registro no se ha realizado correctamente porque el servidor registrar contesta al cliente con un mensaje 401 Unauthorized.   
  ** ¿Podrías identificar las diferencias entre el primer intento y el segundo de registro? (fíjate en el tamaño de los paquetes y mira a qué se debe el cambio)
         El primer intento de registro no lleva autenticación, por ello recibe el mensaje del registrar "401 Unauthorized". Sin embargo el segundo intento si que posee cabecera de Authorization, y por ello el servidor registrar lo registra correctamente.
-(((((((((((PREGUNTAR SOBRE COMO FUNCIONA LA AUTORIZACIÓN))))))))))))))))))
  ** ¿Cuánto es el valor del tiempo de expiración de la sesión? Indica las unidades.
         3600 segundos.
 
@@ -111,9 +110,9 @@ Se ha capturado una sesión SIP (archivo sip.cap.gz), que se puede abrir con Wir
  ** ¿Se utilizan bits de padding?
         No. Lo podemos comprobar en la cabecera de las tramas, donde siempre vemos que el bit de padding va a 0.
  ** ¿Cuál es la periodicidad de los paquetes que se envían?
-        De forma aproximada, por cada 5-7 paquetes RTP se envían 2 paquetes H.261.
+        Para los paquetes RTP (audio), el periodo de envío oscila entorno a los 20 ms
  ** ¿Cuántos bits/segundo estamos enviando?
-        Durante toda la transmisión la tasa binaria varía entre 0 bits/s (en el segundo 22) y 240 kbits/s (en el segundo 26).
+        Durante toda la transmisión la tasa binaria varía entre 0 bits/s (en el segundo 22) y 240 kbits/s (en el segundo 26). Si sólo se enviara audio, y todo fuera perfecto, la tasa binaria seria de 64 kbps.
 
 
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
@@ -182,16 +181,22 @@ Captura una sesión SIP de una conversación con el número SIP sip:9999@qxip.ne
 
 17. Observa las diferencias en el inicio de la conversación entre el entorno del laboratorio y el del ejercicio anterior:
  ** ¿Es necesario el uso de DNS y STUN? ¿Por qué?
+        DNS sí que es necesario, STUN no. DNS es el sistema de resolución de nombres de dominio, y al establecer conexión con ekiga.net nosotros no conocemos la IP y el protocolo DNS se encarga de conocer la IP correspondiente a ekiga.net. STUN no es necesario porque en el caso del laboratorio la IP de los ordenadores es directamente la pública y no hace falta avergiuarla, aún así aparecen tramas STUN que lo comprueban.
  ** ¿Son diferentes el registro y la descripción de la sesión?
-
+        El registro es igual, salvo que cambia el nombre de la cuenta SIP a registrar. La descripción de la sesión es muy distinta.
 
 18. Identifica las diferencias existentes entre esta conversación y la conversación anterior:
  ** ¿Cuántos flujos tenemos?
+        Tenemos dos flujos. Uno de audio de ida y otro de audio de vuelta.
  ** ¿Cuál es su periodicidad?
+        La periodicidad es de 20 ms.
  ** ¿Cuánto es el valor máximo del delta y los valores medios y máximo del jitter?
+        - Flujo 1: Max Delta 30.529 ms, Max Jitter 4.569 ms, Mean Jitter 3.250 ms
+        - Flujo 2: Max Delta 86.499 ms, Max Jitter 7.220 ms, Mean Jitter 1.586 ms
  ** ¿Podrías reproducir la conversación desde Wireshark? ¿Cómo? Comprueba que poniendo un valor demasiado pequeño para el buffer de jitter, la conversación puede no tener la calidad necesaria.
- ** ¿Sabrías decir qué tipo de servicio ofrece sip:9999@qxip.net?
-
+        No. Aunque debería funcionar desde la ruta Telephony - RTP - Stream Analysis - Play Streams, tras haber seleccionado una trama RTP. Variando el buffer de jitter se debería comprobar que si lo reducimos mucho, perdemos paquetes, y por tanto la forma de onda y la calidad del audio se ve afectada negativamente.
+ ** ¿Sabrías decir qué tipo de servicio ofrece sip:music@iptel.net?
+        Reproduce música.
 
 
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
